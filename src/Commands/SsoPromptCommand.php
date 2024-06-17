@@ -27,11 +27,26 @@ class SsoPromptCommand extends Command
      */
     public function handle(): void
     {
+        // Check if the sso.php configuration file already exists
+        $configPath = config_path(path: 'sso.php');
+        if (file_exists($configPath)) {
+            $isPresent = confirm(
+                label: 'The SSO configuration file already exists, do you want to overwrite it?',
+                default: false
+            );
+
+            if (!$isPresent) {
+                $this->info(string: "Operation aborted, run the command again to generate the configuration file.");
+
+                exit(1);
+            }
+        }
+
         $options = [
             'strict' => select(
                 label: 'Do you want to enable strict mode?',
-                options: ['yes', 'no', 'auto'],
-                default: 'auto'
+                options: ['yes', 'no'],
+                default: 'yes'
             ),
             'base_url' => text(
                 label: 'What is the base URL of your application?',
@@ -71,7 +86,7 @@ class SsoPromptCommand extends Command
             ),
             'idp_x509_cert' => text(
                 label: 'What is the IDP x509 cert?',
-                default: 'Base64 encoded certificate'
+                default: 'Base64_encoded_certificate'
             ),
             'contact_technical_name' => text(
                 label: 'What is the contact name for technical support?',
@@ -126,7 +141,7 @@ class SsoPromptCommand extends Command
         $strictMode = $options['strict'] === 'yes';
 
         $replacements = [
-            '{{ $strictMode }}' => $strictMode,
+            '{{ $strictMode }}' => $strictMode ? 'true' : 'false',
             '{{ $baseUrl }}' => $options['base_url'],
             '{{ $serviceName }}' => $options['sp_service_name'],
             '{{ $serviceDescription }}' => $options['sp_service_description'],
@@ -161,7 +176,21 @@ class SsoPromptCommand extends Command
             "SAML_CERTIFICATE" => $options['idp_x509_cert'],
         ]);
 
-        $this->info(string: "Environment file updated successfully.");
+        // Ask if the user wants to publish the controller
+        $publishController = confirm(
+            label: 'Do you want to publish the controller?',
+            default: false,
+            hint: 'Recommended if you need to change the controller functions'
+        );
+
+        if ($publishController) {
+            $this->call(command: 'vendor:publish', arguments: [
+                '--provider' => 'ModusDigital\LaravelMicrosoftSso\MicrosoftSsoServiceProvider',
+                '--tag' => 'sso-controllers'
+            ]);
+        }
+
+        $this->info(string: "\nEnvironment file updated successfully.");
         $this->info(string: "SSO configuration completed successfully, don't forget to configure the urls in the azure portal");
         exit(0);
     }
