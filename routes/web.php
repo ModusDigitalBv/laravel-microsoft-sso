@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modus\LaravelMicrosoftSso\Http\Controllers\MicrosoftSsoController;
+use ModusDigital\LaravelMicrosoftSso\Http\Controllers\MicrosoftSsoController;
 
 Route::name('sso.')
     ->prefix('sso')

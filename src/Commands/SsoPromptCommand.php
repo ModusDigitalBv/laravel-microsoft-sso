@@ -1,6 +1,6 @@
 <?php
 
-namespace Modus\LaravelMicrosoftSso\Commands;
+namespace ModusDigital\LaravelMicrosoftSso\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;

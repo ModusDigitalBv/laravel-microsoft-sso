@@ -1,6 +1,6 @@
 <?php
 
-namespace Modus\LaravelMicrosoftSso;
+namespace ModusDigital\LaravelMicrosoftSso;
 
 use Illuminate\Support\ServiceProvider;
 

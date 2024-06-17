@@ -1,6 +1,6 @@
 <?php
 
-namespace Modus\LaravelMicrosoftSso\Http\Controllers;
+namespace ModusDigital\LaravelMicrosoftSso\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
