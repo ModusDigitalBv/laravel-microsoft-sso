@@ -1,5 +1,5 @@
 {
-    "name": "modus/laravel-microsoft-sso",
+    "name": "modus-digital/laravel-microsoft-sso",
     "description": "A easy way to integrate logging in with microsoft",
     "keywords": ["microsoft", "sso", "laravel"],
     "version": "0.1.3",
