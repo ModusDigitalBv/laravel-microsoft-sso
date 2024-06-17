@@ -1,0 +1,84 @@
+<?php
+
+return [
+    'strict' => {{ $strictMode }},
+    'debug' => env('APP_DEBUG', false),
+    'baseurl' => env('SAML_BASE_URL', '{{ $baseUrl }}'),
+    'sp' => [
+        'entityId' => env('SAML_SP_ENTITY_ID', ''),
+        'assertionConsumerService' => [
+            'url' => env('SAML_SP_ACS_URL', ''),
+            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+        ],
+        'attributeConsumingService' => [
+            'serviceName' => '{{ $serviceName }}',
+            'serviceDescription' => '{{ $serviceDescription }}',
+            'requestedAttributes' => [
+                [
+                    'name' => '',
+                    'isRequired' => false,
+                    'nameFormat' => '',
+                    'friendlyName' => '',
+                    'attributeValue' => [],
+                ],
+            ],
+        ],
+        'singleLogoutService' => [
+            'url' => env('SAML_SP_SLS_URL', ''),
+            'binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+        ],
+        'NameIDFormat' => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
+    ],
+    'idp' => [
+        'entityId' => env('SAML_IDP_ENTITY_ID', ''),
+        'singleSignOnService' => [
+            'url' => env('SAML_IDP_SSO_URL', ''),
+        ],
+        'singleLogoutService' => [
+            'url' => env('SAML_IDP_SLS_URL', ''),
+        ],
+        'x509cert' => env('SAML_CERTIFICATE', ''),
+    ],
+    'contactPerson' => [
+        'technical' => [
+            'givenName' => '{{ $technicalContactName }}',
+            'emailAddress' => '{{ $technicalContactEmail }}',
+        ],
+        'support' => [
+            'givenName' => '{{ $supportContactName }}',
+            'emailAddress' => '{{ $supportContactEmail }}',
+        ],
+    ],
+    'organization' => [
+        'en-US' => [
+            'name' => '{{ $organizationName }}',
+            'displayname' => '{{ $organizationDisplayName }}',
+            'url' => '{{ $organizationUrl }}',
+        ],
+    ],
+    'compress' => [
+        'requests' => true,
+        'responses' => true,
+    ],
+    'security' => [
+        'nameIdEncrypted' => false,
+        'authnRequestsSigned' => false,
+        'logoutRequestSigned' => false,
+        'logoutResponseSigned' => false,
+        'signMetadata' => false,
+        'wantMessagesSigned' => false,
+        'wantAssertionsEncrypted' => false,
+        'wantAssertionsSigned' => false,
+        'wantNameId' => true,
+        'wantNameIdEncrypted' => false,
+        'requestedAuthnContext' => false,
+        'wantXMLValidation' => true,
+        'relaxDestinationValidation' => false,
+        'allowRepeatAttributeName' => false,
+        'destinationStrictlyMatches' => false,
+        'rejectUnsolicitedResponsesWithInResponseTo' => false,
+        'signatureAlgorithm' => 'http://www.w3.org/2001/04/xmldsig-more#rsa-sha256',
+        'digestAlgorithm' => 'http://www.w3.org/2001/04/xmlenc#sha256',
+        'lowercaseUrlencoding' => false,
+    ],
+];
